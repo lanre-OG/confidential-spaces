@@ -9,7 +9,6 @@ import base64
 import google.cloud.kms as kms
 import re
 import os
-import argparse
 import configparser
 
 config = configparser.ConfigParser()

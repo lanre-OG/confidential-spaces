@@ -1,11 +1,17 @@
-FROM alpine:latest
+# Use the official Python image as a base
+FROM python:3.9-slim
 
-WORKDIR /test
+# Set working directory
+WORKDIR /app
 
-COPY workload /test
+# Copy requirements file
+COPY requirements.txt .
 
-ENTRYPOINT ["/test/workload"]
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
-LABEL "tee.launch_policy.allow_cmd_override"="true"
+# Copy the rest of the application code into the container
+COPY . .
 
-CMD []
+# Command to run your application
+CMD ["python", "workload-python.py"]
