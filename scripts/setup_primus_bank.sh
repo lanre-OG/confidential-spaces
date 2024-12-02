@@ -26,12 +26,12 @@ create_kms_encryption_key ${PRIMUS_ENC_KEY} ${PRIMUS_ENC_KEYRING} ${PRIMUS_PROJE
 
 echo "Encrypting the customer data file of Primus Bank ..."
 gcloud kms encrypt \
-    --ciphertext-file="${PARENT_DIR}/artifacts/primus_enc_customer_list.csv" \
-    --plaintext-file="${PARENT_DIR}/artifacts/primus_customer_list.csv" \
+    --ciphertext-file="${PARENT_DIR}/artifacts/enc-primus.csv" \
+    --plaintext-file="${PARENT_DIR}/artifacts/primus.csv" \
     --key=projects/${PRIMUS_PROJECT_ID}/locations/${PRIMUS_PROJECT_LOCATION}/keyRings/${PRIMUS_ENC_KEYRING}/cryptoKeys/${PRIMUS_ENC_KEY}
 
 echo "Uploading the encrypted file to storage bucket ${PRIMUS_INPUT_STORAGE_BUCKET} ..."
-gsutil cp ${PARENT_DIR}/artifacts/primus_enc_customer_list.csv gs://${PRIMUS_INPUT_STORAGE_BUCKET}/primus_enc_customer_list.csv
+gsutil cp ${PARENT_DIR}/artifacts/enc-primus.csv gs://${PRIMUS_INPUT_STORAGE_BUCKET}/enc-primus.csv
 
 echo "Creating service-account ${PRIMUS_SERVICE_ACCOUNT} for Primus Bank."
 create_service_account ${PRIMUS_SERVICE_ACCOUNT}
