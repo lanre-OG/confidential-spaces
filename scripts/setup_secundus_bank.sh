@@ -30,12 +30,12 @@ create_kms_encryption_key ${SECUNDUS_ENC_KEY} ${SECUNDUS_ENC_KEYRING} ${SECUNDUS
 
 echo "Encrypting the customer data file of Secundus Bank ..."
 gcloud kms encrypt \
-    --ciphertext-file="${PARENT_DIR}/artifacts/secundus_enc_customer_list.csv" \
-    --plaintext-file="${PARENT_DIR}/artifacts/secundus_customer_list.csv" \
+    --ciphertext-file="${PARENT_DIR}/artifacts/enc-secundus.csv" \
+    --plaintext-file="${PARENT_DIR}/artifacts/secondus.csv" \
     --key=projects/${SECUNDUS_PROJECT_ID}/locations/${SECUNDUS_PROJECT_LOCATION}/keyRings/${SECUNDUS_ENC_KEYRING}/cryptoKeys/${SECUNDUS_ENC_KEY}
 
 echo "Uploading the encrypted file to storage bucket ${SECUNDUS_INPUT_STORAGE_BUCKET} ..."
-gsutil cp ${PARENT_DIR}/artifacts/secundus_enc_customer_list.csv gs://${SECUNDUS_INPUT_STORAGE_BUCKET}/secundus_enc_customer_list.csv
+gsutil cp ${PARENT_DIR}/artifacts/enc-secundus.csv gs://${SECUNDUS_INPUT_STORAGE_BUCKET}/enc-secundus.csv
 
 echo "Creating service-account ${SECUNDUS_SERVICE_ACCOUNT} for secundus bank ..."
 create_service_account ${SECUNDUS_SERVICE_ACCOUNT}
