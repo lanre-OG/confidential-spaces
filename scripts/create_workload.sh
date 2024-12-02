@@ -16,30 +16,30 @@ create_artifact_repository ${PRIMUS_ARTIFACT_REPOSITORY} ${PRIMUS_PROJECT_REPOSI
 
 gcloud auth configure-docker ${PRIMUS_PROJECT_REPOSITORY_REGION}-docker.pkg.dev
 
-echo "Updating workload code with required resource names ..."
-./generate_workload_code.sh
-sed -i'' "s/PRIMUS_INPUT_STORAGE_BUCKET/${PRIMUS_INPUT_STORAGE_BUCKET}/" ${PARENT_DIR}/src/workload.go
-sed -i'' "s/PRIMUS_PROJECT_ID/${PRIMUS_PROJECT_ID}/" ${PARENT_DIR}/src/workload.go
-sed -i'' "s/PRIMUS_ENC_KEYRING/${PRIMUS_ENC_KEYRING}/" ${PARENT_DIR}/src/workload.go
-sed -i'' "s/PRIMUS_ENC_KEY/${PRIMUS_ENC_KEY}/" ${PARENT_DIR}/src/workload.go
-sed -i'' "s/PRIMUS_SERVICE_ACCOUNT/${PRIMUS_SERVICE_ACCOUNT}/" ${PARENT_DIR}/src/workload.go
-sed -i'' "s/PRIMUS_WORKLOAD_IDENTITY_POOL/${PRIMUS_WORKLOAD_IDENTITY_POOL}/" ${PARENT_DIR}/src/workload.go
-sed -i'' "s/PRIMUS_WIP_PROVIDER/${PRIMUS_WIP_PROVIDER}/" ${PARENT_DIR}/src/workload.go
-sed -i'' "s/PRIMUS_PROJECT_NUMBER/${PRIMUS_PROJECT_NUMBER}/" ${PARENT_DIR}/src/workload.go
+# echo "Updating workload code with required resource names ..."
+# ./generate_workload_code.sh
+# sed -i'' "s/PRIMUS_INPUT_STORAGE_BUCKET/${PRIMUS_INPUT_STORAGE_BUCKET}/" ${PARENT_DIR}/src/workload.go
+# sed -i'' "s/PRIMUS_PROJECT_ID/${PRIMUS_PROJECT_ID}/" ${PARENT_DIR}/src/workload.go
+# sed -i'' "s/PRIMUS_ENC_KEYRING/${PRIMUS_ENC_KEYRING}/" ${PARENT_DIR}/src/workload.go
+# sed -i'' "s/PRIMUS_ENC_KEY/${PRIMUS_ENC_KEY}/" ${PARENT_DIR}/src/workload.go
+# sed -i'' "s/PRIMUS_SERVICE_ACCOUNT/${PRIMUS_SERVICE_ACCOUNT}/" ${PARENT_DIR}/src/workload.go
+# sed -i'' "s/PRIMUS_WORKLOAD_IDENTITY_POOL/${PRIMUS_WORKLOAD_IDENTITY_POOL}/" ${PARENT_DIR}/src/workload.go
+# sed -i'' "s/PRIMUS_WIP_PROVIDER/${PRIMUS_WIP_PROVIDER}/" ${PARENT_DIR}/src/workload.go
+# sed -i'' "s/PRIMUS_PROJECT_NUMBER/${PRIMUS_PROJECT_NUMBER}/" ${PARENT_DIR}/src/workload.go
 
-sed -i'' "s/SECUNDUS_INPUT_STORAGE_BUCKET/${SECUNDUS_INPUT_STORAGE_BUCKET}/" ${PARENT_DIR}/src/workload.go
-sed -i'' "s/SECUNDUS_PROJECT_ID/${SECUNDUS_PROJECT_ID}/" ${PARENT_DIR}/src/workload.go
-sed -i'' "s/SECUNDUS_ENC_KEYRING/${SECUNDUS_ENC_KEYRING}/" ${PARENT_DIR}/src/workload.go
-sed -i'' "s/SECUNDUS_ENC_KEY/${SECUNDUS_ENC_KEY}/" ${PARENT_DIR}/src/workload.go
-sed -i'' "s/SECUNDUS_SERVICE_ACCOUNT/${SECUNDUS_SERVICE_ACCOUNT}/" ${PARENT_DIR}/src/workload.go
-sed -i'' "s/SECUNDUS_WORKLOAD_IDENTITY_POOL/${SECUNDUS_WORKLOAD_IDENTITY_POOL}/" ${PARENT_DIR}/src/workload.go
-sed -i'' "s/SECUNDUS_WIP_PROVIDER/${SECUNDUS_WIP_PROVIDER}/" ${PARENT_DIR}/src/workload.go
-sed -i'' "s/SECUNDUS_PROJECT_NUMBER/${SECUNDUS_PROJECT_NUMBER}/" ${PARENT_DIR}/src/workload.go
+# sed -i'' "s/SECUNDUS_INPUT_STORAGE_BUCKET/${SECUNDUS_INPUT_STORAGE_BUCKET}/" ${PARENT_DIR}/src/workload.go
+# sed -i'' "s/SECUNDUS_PROJECT_ID/${SECUNDUS_PROJECT_ID}/" ${PARENT_DIR}/src/workload.go
+# sed -i'' "s/SECUNDUS_ENC_KEYRING/${SECUNDUS_ENC_KEYRING}/" ${PARENT_DIR}/src/workload.go
+# sed -i'' "s/SECUNDUS_ENC_KEY/${SECUNDUS_ENC_KEY}/" ${PARENT_DIR}/src/workload.go
+# sed -i'' "s/SECUNDUS_SERVICE_ACCOUNT/${SECUNDUS_SERVICE_ACCOUNT}/" ${PARENT_DIR}/src/workload.go
+# sed -i'' "s/SECUNDUS_WORKLOAD_IDENTITY_POOL/${SECUNDUS_WORKLOAD_IDENTITY_POOL}/" ${PARENT_DIR}/src/workload.go
+# sed -i'' "s/SECUNDUS_WIP_PROVIDER/${SECUNDUS_WIP_PROVIDER}/" ${PARENT_DIR}/src/workload.go
+# sed -i'' "s/SECUNDUS_PROJECT_NUMBER/${SECUNDUS_PROJECT_NUMBER}/" ${PARENT_DIR}/src/workload.go
 
-echo "Building the workload go binary ..."
+# echo "Building the workload go binary ..."
 cd ${PARENT_DIR}/src
-go mod init workload && go mod tidy
-CGO_ENABLED=0 go build workload.go
+# go mod init workload && go mod tidy
+# CGO_ENABLED=0 go build workload.go
 
 echo "Building the workload docker image ..."
 docker build . -t ${IMAGE_REFERENCE}
