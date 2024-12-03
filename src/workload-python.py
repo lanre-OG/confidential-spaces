@@ -51,18 +51,23 @@ def replace_placeholders(data: dict, replacements: dict) -> dict:
 def decrypt_data(key_name, trusted_service_account_email, wip_provider_name, encrypted_data):
     
     """Decrypts the given encrypted data using the provided KMS key."""
-    replacements = {
-        "wip": wip_provider_name.strip("/").strip('"'),
-        "SA": trusted_service_account_email.strip("/").strip('"'),
-        }
-    replacements =str(replacements)
-    replacements.replace("'", '"')
-    print(replacements)
-    credential_config = dict(replace_placeholders(credentialConfig, replacements))
-    # filename = "config.json"
-    credential_config = json.loads(str(credential_config))
-    print(credential_config)
-    credentials = identity_pool.Credentials.from_info(credential_config)
+    # replacements = {
+    #     "wip": wip_provider_name.strip("/").strip('"'),
+    #     "SA": trusted_service_account_email.strip("/").strip('"'),
+    #     }
+    # replacements =str(replacements)
+    # replacements.replace("'", '"')
+    # print(replacements)
+    # credential_config = dict(replace_placeholders(credentialConfig, replacements))
+    # # filename = "config.json"
+    # credential_config = json.loads(str(credential_config))
+    # print(credential_config)
+
+    credentialConfig["audience"] = credentialConfig["audience"].format(wip=wip_provider_name)
+    credentialConfig["service_account_impersonation_url"] = credentialConfig["service_account_impersonation_url"].format(SA=trusted_service_account_email)
+
+    credentials = identity_pool.Credentials.from_info(credentialConfig)
+    # credentials = identity_pool.Credentials.from_info(credential_config)
 
     # write_creds(credential_config, filename)
     
