@@ -5,6 +5,7 @@ from typing import List, Tuple
 import csv
 from io import StringIO
 from google.cloud import storage
+from google.auth import identity_pool
 import base64
 import google.cloud.kms as kms
 import re
@@ -55,12 +56,15 @@ def decrypt_data(key_name, trusted_service_account_email, wip_provider_name, enc
         "SA": trusted_service_account_email.strip("/").strip('"'),
         }
     credential_config = dict(replace_placeholders(credentialConfig, replacements))
-    filename = "config.json"
+    # filename = "config.json"
+    credential_config = json.loads(credential_config)
+    credentials = identity_pool.Credentials.from_info(credential_config)
 
-    write_creds(credential_config, filename)
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "config.json"
-    # kms_client = kms.KeyManagementServiceClient(credentials="config.json")
-    kms_client = kms.KeyManagementServiceClient()
+    # write_creds(credential_config, filename)
+    
+    # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "config.json"
+    kms_client = kms.KeyManagementServiceClient(credentials=credentials)
+    # kms_client = kms.KeyManagementServiceClient()
     ciphertext_crc32c = crc32c(encrypted_data)
 
     decrypt_request = {
