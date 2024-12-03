@@ -55,6 +55,7 @@ def decrypt_data(key_name, trusted_service_account_email, wip_provider_name, enc
         "wip": wip_provider_name.strip("/").strip('"'),
         "SA": trusted_service_account_email.strip("/").strip('"'),
         }
+    replacements.replace("'", '"')
     print(replacements)
     credential_config = dict(replace_placeholders(credentialConfig, replacements))
     # filename = "config.json"
