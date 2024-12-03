@@ -56,9 +56,11 @@ def decrypt_data(key_name, trusted_service_account_email, wip_provider_name, enc
         }
     credential_config = dict(replace_placeholders(credentialConfig, replacements))
     filename = "config.json"
-    write_creds(credential_config, filename)
-    kms_client = kms.KeyManagementServiceClient(credentials="config.json")
 
+    write_creds(credential_config, filename)
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "config.json"
+    # kms_client = kms.KeyManagementServiceClient(credentials="config.json")
+    kms_client = kms.KeyManagementServiceClient()
     ciphertext_crc32c = crc32c(encrypted_data)
 
     decrypt_request = {
@@ -170,7 +172,7 @@ def main():
     storage_client = storage.Client()
     bucket = storage_client.bucket(result_bucket)
     blob = bucket.blob(blob_name)
-    
+
     # Write data to a string buffer in CSV format
     csv_buffer = StringIO()
     writer = csv.writer(csv_buffer)
