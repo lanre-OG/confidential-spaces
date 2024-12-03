@@ -65,7 +65,7 @@ def decrypt_data(key_name, trusted_service_account_email, wip_provider_name, enc
 
     credentialConfig["audience"] = credentialConfig["audience"].format(wip=wip_provider_name)
     credentialConfig["service_account_impersonation_url"] = credentialConfig["service_account_impersonation_url"].format(SA=trusted_service_account_email)
-
+    print(credentialConfig)
     credentials = identity_pool.Credentials.from_info(credentialConfig)
     # credentials = identity_pool.Credentials.from_info(credential_config)
 
